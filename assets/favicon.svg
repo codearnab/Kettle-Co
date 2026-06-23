@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="kettleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3C63F"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+  </defs>
+  <!-- Kettle body -->
+  <path d="M18 22 C18 18, 22 14, 32 14 C42 14, 46 18, 46 22 L46 40 C46 48, 40 54, 32 54 C24 54, 18 48, 18 40 Z" fill="url(#kettleGrad)"/>
+  <!-- Handle -->
+  <path d="M46 26 C54 26, 56 30, 56 34 C56 38, 54 42, 46 42" fill="none" stroke="#D4AF37" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Spout -->
+  <path d="M18 28 L12 22 L10 18" fill="none" stroke="#D4AF37" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Lid -->
+  <rect x="24" y="11" width="16" height="4" rx="2" fill="#F3C63F"/>
+  <circle cx="32" cy="9" r="2.5" fill="#D4AF37"/>
+  <!-- Steam lines -->
+  <path d="M26 5 C26 3, 28 1, 28 -1" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M32 4 C32 2, 34 0, 34 -2" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M38 5 C38 3, 36 1, 36 -1" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+</svg>

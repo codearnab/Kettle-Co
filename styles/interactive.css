@@ -1,0 +1,477 @@
+/* ==========================================================================
+   INTERACTIVE BOIL SIMULATOR CSS (MILESTONE 3)
+   ========================================================================== */
+
+:root {
+  --glow-color: var(--temp-cold);
+  --glow-intensity: 0.15;
+}
+
+.simulator-section {
+  padding: 60px 0 100px;
+}
+
+.simulator-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   LEFT COLUMN: THE KETTLE DEVICE
+   ========================================================================== */
+.kettle-visual-column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  min-height: 480px;
+}
+
+/* Kettle Device Wrapper */
+.kettle-device {
+  position: relative;
+  width: 300px;
+  height: 350px;
+}
+
+.kettle-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--color-text-secondary);
+}
+
+.kettle-spout {
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+}
+
+/* LED Glow Ring */
+.kettle-led-glow {
+  position: absolute;
+  bottom: 53px;
+  left: 56px;
+  width: 188px;
+  height: 6px;
+  border-radius: 4px;
+  background-color: var(--glow-color);
+  box-shadow: 0 0 calc(12px * var(--glow-intensity)) var(--glow-color),
+              0 0 calc(24px * var(--glow-intensity)) var(--glow-color);
+  transition: background-color 0.2s linear, box-shadow 0.2s linear;
+  z-index: 5;
+}
+
+/* Digital Screen Overlaid on the Kettle Body */
+.kettle-screen {
+  position: absolute;
+  top: 155px;
+  left: 105px;
+  width: 90px;
+  height: 90px;
+  background-color: #050507;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8),
+              0 4px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.screen-label {
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.screen-temp {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.screen-status {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--glow-color);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+  text-transform: uppercase;
+  transition: color 0.2s linear;
+}
+
+/* Water Level Overlay inside the Kettle Body */
+.kettle-water-overlay {
+  position: absolute;
+  bottom: 74px;
+  left: 63px;
+  width: 174px;
+  height: 166px;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 75%; /* Controlled dynamically (75% filled) */
+  background: linear-gradient(to top, rgba(100, 223, 223, 0.12) 0%, rgba(100, 223, 223, 0.05) 100%);
+  border-top: 1px solid rgba(100, 223, 223, 0.3);
+  transition: height 0.5s ease-in-out, background 0.3s linear, border-color 0.3s linear;
+}
+
+/* Heating state water styles */
+.kettle-device.heating .water-fill {
+  background: linear-gradient(to top, rgba(255, 120, 0, 0.15) 0%, rgba(255, 120, 0, 0.06) 100%);
+  border-top: 1px solid rgba(255, 120, 0, 0.4);
+}
+
+.kettle-device.boiling .water-fill {
+  background: linear-gradient(to top, rgba(255, 0, 110, 0.18) 0%, rgba(255, 0, 110, 0.08) 100%);
+  border-top: 1px solid rgba(255, 0, 110, 0.5);
+  animation: boilVibrate 0.15s infinite alternate;
+}
+
+/* Bubbles container */
+.bubbles-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -10px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: floatBubble 2s infinite ease-in;
+}
+
+/* Steam particles above lid and spout */
+.steam-container {
+  position: absolute;
+  top: -40px;
+  left: 30px;
+  width: 240px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.steam-cloud {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: riseSteam 1.5s infinite linear;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: CONTROLS PANEL
+   ========================================================================== */
+.controls-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 48px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  backdrop-filter: var(--glass-blur);
+  position: relative;
+}
+
+.controls-card h2 {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.controls-card > p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 32px;
+}
+
+/* Target temperature readout panel */
+.target-display {
+  background-color: #070709;
+  border: 1px solid var(--color-border);
+  padding: 20px 24px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.target-label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.target-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Styled Slider Input */
+.temp-slider-group {
+  margin-bottom: 36px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+}
+
+.temp-range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-surface-elevated);
+  outline: none;
+  cursor: pointer;
+}
+
+.temp-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 4px solid var(--color-surface);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: transform 0.1s ease;
+}
+
+.temp-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+}
+
+/* Custom Presets Grid */
+.presets-group {
+  margin-bottom: 36px;
+}
+
+.presets-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.preset-btn {
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 12px 16px;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.preset-btn:hover {
+  border-color: var(--color-primary);
+  background-color: rgba(212, 175, 55, 0.05);
+  transform: translateY(-2px);
+}
+
+.preset-btn.active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-glow);
+  box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.1);
+}
+
+.preset-temp {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.preset-name {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+/* Wattage selector toggle (eco/rapid) */
+.watt-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+}
+
+.watt-label {
+  font-size: 0.95rem;
+}
+
+.watt-description {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.watt-toggle-buttons {
+  display: flex;
+  background-color: var(--color-surface-elevated);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.watt-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.watt-btn.active {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+/* Big Action Trigger Button */
+.boil-action-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition-smooth);
+}
+
+.boil-action-btn.start {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+.boil-action-btn.start:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+  transform: translateY(-2px);
+}
+
+.boil-action-btn.stop {
+  background-color: #E63946;
+  color: #FFF;
+  border-color: #E63946;
+}
+
+.boil-action-btn.stop:hover {
+  background-color: #FF4D4D;
+  box-shadow: 0 10px 25px rgba(230, 57, 70, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+
+/* Water vibration effect when boiling */
+@keyframes boilVibrate {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  25% { transform: translate(-1px, -1px) rotate(-0.1deg); }
+  50% { transform: translate(-1px, 1px) rotate(0deg); }
+  75% { transform: translate(1px, -1px) rotate(0.1deg); }
+  100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+
+/* Bubble movement */
+@keyframes floatBubble {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0.1;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-160px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Steam raising and dissolving */
+@keyframes riseSteam {
+  0% {
+    transform: translateY(10px) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-50px) translateX(var(--steam-drift, 10px)) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Responsive configurations */
+@media (max-width: 900px) {
+  .simulator-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .kettle-visual-column {
+    min-height: auto;
+  }
+  
+  .controls-card {
+    padding: 32px 20px;
+  }
+}

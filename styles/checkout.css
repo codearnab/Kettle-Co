@@ -1,0 +1,593 @@
+/* ==========================================================================
+   CHECKOUT PAGE & SUCCESS STATE STYLING (MILESTONE 6)
+   ========================================================================== */
+
+.checkout-section {
+  padding: 60px 0 100px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Card panels */
+.checkout-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 36px;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  backdrop-filter: var(--glass-blur);
+}
+
+.checkout-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.checkout-card-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 28px;
+}
+
+/* Form Layout Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  grid-column: span 6;
+}
+
+.half-width {
+  grid-column: span 3;
+}
+
+.third-width {
+  grid-column: span 2;
+}
+
+/* Field Inputs */
+.form-group label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  padding: 14px 16px;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Focus and interactive styles */
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 12px var(--color-primary-glow);
+}
+
+/* Form feedback validations */
+.error-feedback {
+  display: none;
+  font-size: 0.75rem;
+  color: #E63946;
+  margin-top: 6px;
+}
+
+.form-group.has-error input,
+.form-group.has-error select {
+  border-color: #E63946;
+  background-color: rgba(230, 57, 70, 0.02);
+}
+
+.form-group.has-error .error-feedback {
+  display: block;
+}
+
+.form-group.has-success input,
+.form-group.has-success select {
+  border-color: #64DFDF;
+  background-color: rgba(100, 223, 223, 0.01);
+}
+
+/* Special credit card number wrapper icon input */
+.input-card-icon-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.input-card-icon-wrapper input {
+  width: 100%;
+  padding-right: 70px;
+}
+
+.card-brand-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  pointer-events: none;
+  color: var(--color-text-secondary);
+  transition: var(--transition-fast);
+}
+
+/* Submit Actions */
+.checkout-actions {
+  margin-top: 32px;
+}
+
+.place-order-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Right: Order Summary Sidebar */
+.checkout-summary-column {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.checkout-summary-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 32px;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.checkout-summary-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 16px;
+}
+
+.checkout-summary-items-list {
+  max-height: 280px;
+  overflow-y: auto;
+  margin-bottom: 24px;
+  padding-right: 8px;
+}
+
+.checkout-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  animation: summaryItemFade 0.3s ease forwards;
+}
+
+.summary-item-img-wrap {
+  width: 56px;
+  height: 56px;
+  background-color: #0d0d10;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.summary-item-img-wrap img {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+}
+
+.summary-item-qty {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: var(--color-primary);
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.summary-item-info {
+  flex: 1;
+}
+
+.summary-item-name {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.summary-item-color {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.summary-item-price {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Totals breakdown calculations */
+.checkout-totals {
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+}
+
+.free-shipping {
+  color: #64DFDF;
+  font-weight: 600;
+}
+
+.checkout-totals .grand-total {
+  border-top: 1px solid var(--color-border);
+  margin-top: 16px;
+  padding-top: 16px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.grand-total span:last-child {
+  color: var(--color-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+/* Empty checkout state */
+.checkout-empty-state {
+  max-width: 500px;
+  margin: 80px auto;
+  text-align: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 56px 40px;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.checkout-empty-icon {
+  width: 72px;
+  height: 72px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  color: var(--color-text-muted);
+}
+
+.checkout-empty-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.checkout-empty-state h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.checkout-empty-state p {
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+/* Simulated payment gateway transition overlay */
+.payment-processing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(6, 6, 8, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.payment-processing-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.processing-card {
+  max-width: 400px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 48px 32px;
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  animation: processingPulse 2s infinite ease-in-out;
+}
+
+.premium-spinner {
+  width: 56px;
+  height: 56px;
+  border: 3px solid rgba(212, 175, 55, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  animation: spin 1s infinite linear;
+}
+
+.processing-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.processing-card p {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   ORDER SUCCESS SCREEN
+   ========================================================================== */
+.checkout-success-section {
+  padding: 80px 0 100px;
+}
+
+.success-card {
+  max-width: 620px;
+  margin: 0 auto;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 56px 48px;
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: successFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.success-icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+/* Elegant checkmark circle SVG animations */
+.checkmark-svg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: var(--color-primary);
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px var(--color-primary);
+  animation: fillCircle .4s ease-in-out .4s forwards, scaleCheckmark .3s ease-in-out .9s forwards;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: var(--color-primary);
+  fill: none;
+  animation: strokeCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-width: 3;
+  stroke: #000;
+  animation: strokeCheck 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+.success-card h1 {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.success-thankyou {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 36px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Detail info grid */
+.success-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.detail-tile {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-tile {
+  grid-column: span 2;
+  border-top: 1px solid var(--color-border);
+  margin-top: 12px;
+  padding-top: 16px;
+}
+
+.tile-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.tile-val {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.tile-val strong {
+  color: var(--color-text-primary);
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.success-actions .btn {
+  padding: 14px 40px;
+}
+
+/* ==========================================================================
+   ANIMATIONS KEYFRAMES
+   ========================================================================== */
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes processingPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.99); }
+  100% { transform: scale(1); }
+}
+
+@keyframes strokeCircle {
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes strokeCheck {
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes fillCircle {
+  100% { box-shadow: inset 0px 0px 0px 40px var(--color-primary); }
+}
+
+@keyframes scaleCheckmark {
+  0%, 100% { transform: none; }
+  50% { transform: scale3d(1.1, 1.1, 1); }
+}
+
+@keyframes successFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes summaryItemFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN ADAPTATIONS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .checkout-summary-column {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-card {
+    padding: 24px 16px;
+  }
+  
+  .form-grid {
+    gap: 16px 12px;
+  }
+  
+  .half-width {
+    grid-column: span 6;
+  }
+  
+  .third-width {
+    grid-column: span 3;
+  }
+  
+  .success-details-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  
+  .full-tile {
+    grid-column: span 1;
+  }
+  
+  .success-card {
+    padding: 32px 20px;
+  }
+  
+  .success-card h1 {
+    font-size: 1.8rem;
+  }
+}
